@@ -14,7 +14,6 @@ const listContacts = async () => {
     return JSON.parse(contactsData);
   } catch (error) {
     console.error("Error listing contacts", error);
-    throw error;
   }
 };
 
@@ -25,8 +24,7 @@ const getContactById = async (contactId) => {
 
     return contact ?? null;
   } catch (error) {
-    console.log("Error getting contact with this id:", error);
-    return null;
+    console.error("Error getting contact with this id:", error);
   }
 };
 
