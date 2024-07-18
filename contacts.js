@@ -1,5 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { nanoid } from "nanoid";
 
@@ -47,13 +47,11 @@ const removeContactById = async (contactId) => {
   }
 };
 
-const addContact = async ({ name, email, phone }) => {
+const addContact = async (data) => {
   try {
     const newContact = {
       id: nanoid(),
-      name,
-      email,
-      phone,
+      ...data,
     };
 
     const contactsArr = await listContacts();
