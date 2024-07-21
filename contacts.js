@@ -7,6 +7,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const contactsPath = join(__dirname, "db", "contacts.json");
 
+const updateContactsFile = async (contactsArr) => {
+  try {
+    await writeFile(contactsPath, JSON.stringify(contactsArr, null, 2));
+  } catch (error) {
+    console.error("Error updating contact", error);
+  }
+};
+
 const listContacts = async () => {
   try {
     const contactsData = await readFile(contactsPath);
@@ -39,7 +47,7 @@ const removeContactById = async (contactId) => {
 
     const [removedContact] = contactsArr.splice(contactIdx, 1);
 
-    await writeFile(contactsPath, JSON.stringify(contactsArr, null, 2));
+    await updateContactsFile(contactsArr);
 
     return removedContact;
   } catch (error) {
@@ -57,7 +65,7 @@ const addContact = async (data) => {
     const contactsArr = await listContacts();
     contactsArr.push(newContact);
 
-    await writeFile(contactsPath, JSON.stringify(contactsArr, null, 2));
+    await updateContactsFile(contactsArr);
 
     return newContact;
   } catch (error) {
